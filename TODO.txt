@@ -3,9 +3,17 @@
 ============================================
 
 p1
-Title
-Price 
-Floorplan
+
+filter
+	filter known building
+	filter shared ownership
+	only 1 picture
+
+DONE - add ground floor
+- use custom areas
+DONE Title
+DONE Price 
+DONE Floorplan
 EPC
 - Also add button to manually discard a result
 
@@ -18,3 +26,9 @@ p2
 
 P3
 - Setup User Agent
+
+http://www.rightmove.co.uk/property-for-sale/find.html?sortType=2&viewType=LIST&channel=BUY&index=0&radius=0.0&numberOfPropertiesPerPage=499&locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711964%7D
+
+http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711964%7D&minBedrooms=2&maxPrice=500000&sortType=6
+
+http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711964%7D&minBedrooms=2&maxPrice=500000&sortType=6&index=24

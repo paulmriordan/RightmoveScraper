@@ -8,8 +8,9 @@ class RightmoveSpider(scrapy.Spider):
     def start_requests(self):
 
         batterseaSearch = "http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711964%7D&minBedrooms=2&maxPrice=500000&sortType=6"
-
-        baseURL = batterseaSearch
+        hackney         = "http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711961%7D&minBedrooms=2&maxPrice=500000&sortType=6"
+        finsbury        = "http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711952%7D&minBedrooms=2&maxPrice=500000&sortType=6"
+        baseURL = finsbury
         
         start_urls = []
         for index in range(0, 1000, 24):
@@ -50,7 +51,7 @@ class RightmoveSpider(scrapy.Spider):
 
         description = response.css('p[itemprop="description"]::text').extract()
         # TODO  custom filter args
-        _filter = ["purpose built", "purpose-built", "ex-council", "ground floor", "ground-floor"]
+        _filter = ["purpose built", "purpose-built", "ex-council", "ground floor", "ground-floor", "ground flat", "ex-local", "ex local"]
         if not any(word in s for s in description for word in _filter):
             yield {
                 'title': response.css("head > title::text").extract(),
@@ -58,7 +59,8 @@ class RightmoveSpider(scrapy.Spider):
                 'floorplan': response.css("div.zoomableimagewrapper > img::attr(src)").extract(),
                 'url': response.url,
                 'description': response.css('p[itemprop="description"]').extract(),
-                'images': response.css('meta[itemprop="contentUrl"]::attr(content)').extract()
+                'images': response.css('meta[itemprop="contentUrl"]::attr(content)').extract(),
+                'map': response.css('a[class="block js-tab-trigger js-ga-minimap"] img::attr(src)').extract()
             }
 
     # def parse_author(self, response):

@@ -46,6 +46,8 @@ with open('results.html', 'w') as outputHTML:
 	        	html += '<img src ="' + val.floorplan + '" class="image-styles" />';
             }
 
+            html += '<img src ="http:' + val.map + '" class="image-styles" />';
+
             html += '<p class="image-title">' + val.description + '</p>';
             
             html += '</div>';
