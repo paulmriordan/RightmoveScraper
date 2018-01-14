@@ -74,7 +74,7 @@ class RightmoveSpider(scrapy.Spider):
         if not any(word in s for s in description for word in _filter):
             yield {
                 'url': response.url,
-                'description': description,
+                'description': response.css('p[itemprop="description"]').extract(),
                 'images': response.css('meta[itemprop="contentUrl"]::attr(content)').extract()
             }
 

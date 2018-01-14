@@ -1,3 +1,15 @@
+import os
+from subprocess import call
+
+scrapResultsFile = "./results.json"
+
+try:
+	os.remove(scrapResultsFile) 
+except OSError:
+    pass
+
+call('scrapy crawl RightmoveSpider -o results.json', shell=True)
+
 before = """<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script>
 (function($) {
@@ -19,11 +31,16 @@ with open('results.html', 'w') as outputHTML:
             html;
 
         $.each(data, function (key, val) {
-            html = '<div class="image-list">';
+            html = '<div class="resultsList">';
+
             $.each(val.images, function (index, value) {
+				html += '<a href=' + val.url + ' target="_blank">';
             	html += '<img src ="' + value + '" class="image-styles" />';
+            	html += '</a>'
 	        })
-            html += '<p class="image-title">' + val.title + '</p>';
+
+            html += '<p class="image-title">' + val.description + '</p>';
+            
             html += '</div>';
             target.append(html);
         });
@@ -34,9 +51,9 @@ with open('results.html', 'w') as outputHTML:
 </script>
 <div id="target"></div>
 <style>
-.image-list{
+.resultsList{
     text-align:left;
-    border:1px solid #666;
+    border:20px solid #666;
 }
 img{
     width:100%;
@@ -45,13 +62,13 @@ img{
 .images-styles{
     display:inline-block;
     margin:10px 10px;
-    padding:0px;
-    border:0px solid #CCC;
+    padding:5px;
+    border:5px solid #CCC;
 }
 .image-title {
     background:#000;
     width:80%;
-    position:absolute;
+    position:relative;
     bottom:15px;
     left:15px;
     color:#f7f7f7;
