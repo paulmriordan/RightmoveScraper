@@ -1,0 +1,20 @@
+============================================
+ TODO
+============================================
+
+p1
+Title
+Price 
+Floorplan
+EPC
+- Also add button to manually discard a result
+
+p2
+- Prevent repeatedly finding the same property
+   Note: must allow price updates to be seen
+- Allow custom filters
+- Write an extension to filter out places not meeting word filter criteria (purpose built, ground floor)
+- Search the key features section
+
+P3
+- Setup User Agent

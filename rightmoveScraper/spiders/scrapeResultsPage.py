@@ -1,38 +1,18 @@
 import scrapy
 
 
-# TODO
-
-# Navigate to property site and search for ground floor and purpose built
-
-# Search the key features section
-
-# Easy to view list
-#   html with images and links
-#       Copy over the entire element, with images?
-
-# Write an extension to filter out places not meeting word filter criteria (purpose built, ground floor)
-#   Also add button to manually discard a result
-
-#   Prevent repeatedly finding the same property
-#       Note: must allow price updates to be seen
-
-#   Args for the price and location
-#   Setup User Agent
-
-
-# "div.propertyCard-description span::text" => gets the description summary 
-
-
 class RightmoveSpider(scrapy.Spider):
     name = 'RightmoveSpider'
 
 
     def start_requests(self):
 
+        batterseaSearch = "http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711964%7D&minBedrooms=2&maxPrice=500000&sortType=6"
+
+        baseURL = batterseaSearch
+        
         start_urls = []
-        baseURL = "http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=REGION%5E87490&minBedrooms=2&maxPrice=475000&sortType=6&includeSSTC=false";
-        for index in range(0, 24, 24):
+        for index in range(0, 1000, 24):
             start_urls.append(baseURL + '&index=' + str(index))
 
         for url in start_urls:
@@ -70,9 +50,12 @@ class RightmoveSpider(scrapy.Spider):
 
         description = response.css('p[itemprop="description"]::text').extract()
         # TODO  custom filter args
-        _filter = ["purpose built", "purpose-built", "ex-council"]
+        _filter = ["purpose built", "purpose-built", "ex-council", "ground floor", "ground-floor"]
         if not any(word in s for s in description for word in _filter):
             yield {
+                'title': response.css("head > title::text").extract(),
+                'price': response.css("#propertyHeaderPrice > strong::text").extract(),
+                'floorplan': response.css("div.zoomableimagewrapper > img::attr(src)").extract(),
                 'url': response.url,
                 'description': response.css('p[itemprop="description"]').extract(),
                 'images': response.css('meta[itemprop="contentUrl"]::attr(content)').extract()

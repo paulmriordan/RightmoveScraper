@@ -33,11 +33,18 @@ with open('results.html', 'w') as outputHTML:
         $.each(data, function (key, val) {
             html = '<div class="resultsList">';
 
+            html += '<p class="image-title">' + val.title + '</p>';
+            html += '<p class="image-title">' + val.price + '</p>';
+
             $.each(val.images, function (index, value) {
 				html += '<a href=' + val.url + ' target="_blank">';
             	html += '<img src ="' + value + '" class="image-styles" />';
             	html += '</a>'
 	        })
+
+	        if (val.floorplan.length != 0) {
+	        	html += '<img src ="' + val.floorplan + '" class="image-styles" />';
+            }
 
             html += '<p class="image-title">' + val.description + '</p>';
             
