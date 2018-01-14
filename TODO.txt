@@ -8,6 +8,8 @@ filter
 	filter known building
 	filter shared ownership
 	only 1 picture
+	take out 6> floor
+	lower case search
 
 DONE - add ground floor
 - use custom areas
