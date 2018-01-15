@@ -1,90 +1,109 @@
 import os
+import datetime
 from subprocess import call
 
-scrapResultsFile = "./results.json"
+def writeResultsToHTML(searchName):
 
-try:
-	os.remove(scrapResultsFile) 
-except OSError:
-    pass
+	now = datetime.datetime.now()
+	fileName = 'results/results_' + searchName + '_' + now.strftime("%Y-%m-%d")
 
-call('scrapy crawl RightmoveSpider -o results.json', shell=True)
+	before = """<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script>
+	(function($) {
 
-before = """<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-<script>
-(function($) {
+	    $(function(){ // ON DOM READY
+	"""
 
-    $(function(){ // ON DOM READY
-"""
+	with open(fileName + '.html', 'w') as outputHTML:
 
-with open('results.html', 'w') as outputHTML:
+		outputHTML.write(before)
+		outputHTML.write("var data=")
 
-	outputHTML.write(before)
-	outputHTML.write("var data=")
+		with open('./results.json', 'r') as jsonResults:
+			jsonString = jsonResults.read()
+			outputHTML.write(jsonString)
 
-	with open('./results.json', 'r') as jsonResults:
-		jsonString = jsonResults.read()
-		outputHTML.write(jsonString)
+		outputHTML.write(""", data = data,
+	            target = $('#target'),
+	            html;
 
-	outputHTML.write(""", data = data,
-            target = $('#target'),
-            html;
+	        $.each(data, function (key, val) {
+	            html = '<div class="resultsList">';
 
-        $.each(data, function (key, val) {
-            html = '<div class="resultsList">';
+	            html += '<p class="image-title">' + val.title + '</p>';
+	            html += '<p class="image-title">' + val.price + '</p>';
 
-            html += '<p class="image-title">' + val.title + '</p>';
-            html += '<p class="image-title">' + val.price + '</p>';
+	            $.each(val.images, function (index, value) {
+					html += '<a href=' + val.url + ' target="_blank">';
+	            	html += '<img src ="' + value + '" class="image-styles" />';
+	            	html += '</a>'
+		        })
 
-            $.each(val.images, function (index, value) {
-				html += '<a href=' + val.url + ' target="_blank">';
-            	html += '<img src ="' + value + '" class="image-styles" />';
-            	html += '</a>'
-	        })
+		        if (val.floorplan.length != 0) {
+		        	html += '<img src ="' + val.floorplan + '" class="image-styles" />';
+	            }
 
-	        if (val.floorplan.length != 0) {
-	        	html += '<img src ="' + val.floorplan + '" class="image-styles" />';
-            }
+	            html += '<img src ="http:' + val.map + '" class="image-styles" />';
 
-            html += '<img src ="http:' + val.map + '" class="image-styles" />';
+	            html += '<p class="image-title">' + val.description + '</p>';
+	            
+	            html += '</div>';
+	            target.append(html);
+	        });
 
-            html += '<p class="image-title">' + val.description + '</p>';
-            
-            html += '</div>';
-            target.append(html);
-        });
+	    }); // end of on DOM READY
 
-    }); // end of on DOM READY
+	}(jQuery));
+	</script>
+	<div id="target"></div>
+	<style>
+	.resultsList{
+	    text-align:left;
+	    border:20px solid #666;
+	}
+	img{
+	    width:100%;
+	    max-width:200px;
+	}
+	.images-styles{
+	    display:inline-block;
+	    margin:10px 10px;
+	    padding:5px;
+	    border:5px solid #CCC;
+	}
+	.image-title {
+	    background:#000;
+	    width:80%;
+	    position:relative;
+	    bottom:15px;
+	    left:15px;
+	    color:#f7f7f7;
+	    text-align:center;
+	    padding:2px;
+	    opacity:0.6;
+	    filter:alpha(opacity=60);
+	    /* For IE8 and earlier */
+	}
+	</style>""")
 
-}(jQuery));
-</script>
-<div id="target"></div>
-<style>
-.resultsList{
-    text-align:left;
-    border:20px solid #666;
-}
-img{
-    width:100%;
-    max-width:200px;
-}
-.images-styles{
-    display:inline-block;
-    margin:10px 10px;
-    padding:5px;
-    border:5px solid #CCC;
-}
-.image-title {
-    background:#000;
-    width:80%;
-    position:relative;
-    bottom:15px;
-    left:15px;
-    color:#f7f7f7;
-    text-align:center;
-    padding:2px;
-    opacity:0.6;
-    filter:alpha(opacity=60);
-    /* For IE8 and earlier */
-}
-</style>""")
+def scrapeResultsToHTMLforURL(searchName, baseURL):
+	scrapResultsFile = "./results.json"
+	try:
+		os.remove(scrapResultsFile) 
+	except OSError:
+	    pass
+	call('scrapy crawl RightmoveSpider -a baseURL=' + baseURL + ' -a searchName=' + searchName + ' -o results.json', shell=True)
+
+	writeResultsToHTML(searchName)
+
+maxDaysSinceAdded = 1
+
+urls = {}
+urls['battersea'] = "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711964%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+urls['hackney'] = "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711961%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+urls['finsbury'] = "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711952%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+
+for key, value in urls.items():
+	scrapeResultsToHTMLforURL(key, value)
+
+

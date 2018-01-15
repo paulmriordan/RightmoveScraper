@@ -2,8 +2,17 @@ import scrapy
 
 class RightmoveSpider(scrapy.Spider):
     name = 'RightmoveSpider'
-
+    num_properties = 24 #default to 1000 to start, update as soon as we find out
+    baseURL = ''
+    searchName = ''
     exclude_list = []
+
+    def __init__(self, baseURL='', searchName='', **kwargs):
+
+        self.baseURL = baseURL
+        self.searchName = searchName
+        # super().__init__(**kwargs)  # python3
+        super(RightmoveSpider, self).__init__(**kwargs)  # python2
 
     def start_requests(self):
 
@@ -11,26 +20,27 @@ class RightmoveSpider(scrapy.Spider):
         #print "exclude list"
         #for p in self.exclude_list: print p
 
-        batterseaSearch = "http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711964%7D&minBedrooms=2&maxPrice=500000&sortType=6"
-        hackney         = "http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711961%7D&minBedrooms=2&maxPrice=500000&sortType=6"
-        finsbury        = "http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711952%7D&minBedrooms=2&maxPrice=500000&sortType=6"
-        baseURL = finsbury
-        
         start_urls = []
-        max_properties = 1000
-        for index in range(0, max_properties, 24):
-            start_urls.append(baseURL + '&index=' + str(index))
+        for index in range(0, self.num_properties, 24):
+            start_urls.append(self.baseURL + '&index=' + str(index))
 
         for url in start_urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
+
+        self.num_properties = int(response.css('span[class="searchHeader-resultCount"]::text').extract_first())
+        print "\n***************************\n"
+        print "\n searchName " + self.searchName + " \n num properties " + str(self.num_properties) + " \n"
+        print "\n***************************\n"
+
         for href in response.css('a.propertyCard-link::attr(href)'):
             yield response.follow(href, self.parse_property)
 
     def parse_property(self, response):
 
         description = response.css('p[itemprop="description"]::text').extract()
+
         # for des in description: print des
         # for p in self.exclude_list: print p
         # description = ["test", "ex-local"]

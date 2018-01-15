@@ -4,6 +4,12 @@
 
 p1
 
+
+- Prevent repeatedly finding the same property
+	- cookies
+	- button on the list
+	- test in jquery to only display non discarded properties
+
 filter
 	filter known building
 	filter shared ownership
@@ -12,15 +18,15 @@ filter
 	lower case search
 
 DONE - add ground floor
-- use custom areas
+DONE - use custom areas
 DONE Title
 DONE Price 
 DONE Floorplan
+
 EPC
 - Also add button to manually discard a result
 
 p2
-- Prevent repeatedly finding the same property
    Note: must allow price updates to be seen
 - Allow custom filters
 - Write an extension to filter out places not meeting word filter criteria (purpose built, ground floor)
