@@ -6,7 +6,7 @@ Filter results with custom key-words (eg, don't show results which have 'ground 
 
 Resulting html page has **all** pictures, description, map, price, and floor plan for each result, and shows **every** result on one page.
 
-![Result Example](https://github.com/paulmriordan/rightmovescraper/exampleScreenshot.png "Example screenshot")
+![Result Example](https://github.com/paulmriordan/RightmoveScraper/raw/master/exampleScreenshot.PNG "Example screenshot")
 
 [Result page example](https://github.com/paulmriordan/rightmovescraper/exampleResultsPeckham)
 
@@ -28,7 +28,7 @@ Properties containing any of terms in **excludeList.txt** will be excluded. Upda
 
 Only the areas specified in **searchAreas.txt** will be searched. Update this with your areas id. This ID can be found the URL for your drawn area, here:
 
-![Search area ID](https://github.com/paulmriordan/rightmovescraper/searchAreaID.PNG "Search area ID")
+![Search area ID](https://github.com/paulmriordan/RightmoveScraper/raw/master/searchAreaID.PNG "Search area ID")
 
 ## Requirements
 
