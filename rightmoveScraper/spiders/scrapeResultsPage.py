@@ -1,8 +1,10 @@
 import scrapy
 
 class RightmoveSpider(scrapy.Spider):
+
+    MAX_PROPERTIES = 1000
+
     name = 'RightmoveSpider'
-    num_properties = 24 #default to 1000 to start, update as soon as we find out
     baseURL = ''
     searchName = ''
     exclude_list = []
@@ -21,7 +23,7 @@ class RightmoveSpider(scrapy.Spider):
         #for p in self.exclude_list: print p
 
         start_urls = []
-        for index in range(0, self.num_properties, 24):
+        for index in range(0, self.MAX_PROPERTIES, 24):
             start_urls.append(self.baseURL + '&index=' + str(index))
 
         for url in start_urls:
@@ -29,10 +31,10 @@ class RightmoveSpider(scrapy.Spider):
 
     def parse(self, response):
 
-        self.num_properties = int(response.css('span[class="searchHeader-resultCount"]::text').extract_first())
-        print "\n***************************\n"
-        print "\n searchName " + self.searchName + " \n num properties " + str(self.num_properties) + " \n"
-        print "\n***************************\n"
+        # self.num_properties = int(response.css('span[class="searchHeader-resultCount"]::text').extract_first().replace(',', ''))
+        # print "\n***************************\n"
+        # print "\n searchName " + self.searchName + " \n num properties " + str(self.num_properties) + " \n"
+        # print "\n***************************\n"
 
         for href in response.css('a.propertyCard-link::attr(href)'):
             yield response.follow(href, self.parse_property)
