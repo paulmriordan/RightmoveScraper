@@ -100,21 +100,21 @@ def scrapeResultsToHTMLforURL(searchName, baseURL):
 
 parser = argparse.ArgumentParser(description='generate easy to read html pages from scraped rightmove results')
 parser.add_argument('-d','--days', help='Days since added on rightmove (must be 1,3,7,14)',required=True)
+parser.add_argument('-p','--price', help='Max price (eg, 500000)',required=True)
+parser.add_argument('-b','--bedrooms', help='Min bedrooms (eg, 2)',required=True)
 args = parser.parse_args()
 
 days = str(args.days)
 
+areas = {}
+with open("searchAreas.txt") as searchAreasFile:
+    for line in searchAreasFile:
+        name, areaID = line.partition(",")[::2]
+        areas[name.strip()] = areaID.strip()
+
 urls = {}
-
-urls['battersea'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711964%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
-urls['hackney'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711961%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
-urls['finsbury'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711952%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
-urls['highgate'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4718090%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
-urls['finchley'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724051%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
-urls['richmond'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724063%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
-urls['peckham'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724075%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
-urls['walthamstow'] 	= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724087%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
-
+for name, areaID in areas.items():
+	urls[name] = ("\"http://www.rightmove.co.uk/property-for-sale/find.html?" + "locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A" + areaID + "%7D" + "&minBedrooms=" + args.bedrooms + "&maxPrice=" + args.bedrooms + "&sortType=6" + "&maxDaysSinceAdded=" + days + "\"")
 
 for key, value in urls.items():
 	scrapeResultsToHTMLforURL(key, value)
