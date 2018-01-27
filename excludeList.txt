@@ -6,3 +6,6 @@ ground-floor
 ground flat
 ex-local
 ex local
+shared ownership
+over 50
+over 60
