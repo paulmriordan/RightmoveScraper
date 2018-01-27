@@ -1,5 +1,6 @@
 import os
 import datetime
+import argparse
 from subprocess import call
 
 def writeResultsToHTML(searchName):
@@ -96,17 +97,23 @@ def scrapeResultsToHTMLforURL(searchName, baseURL):
 
 	writeResultsToHTML(searchName)
 
-maxDaysSinceAdded = 1
+
+parser = argparse.ArgumentParser(description='generate easy to read html pages from scraped rightmove results')
+parser.add_argument('-d','--days', help='Days since added on rightmove (must be 1,3,7,14)',required=True)
+args = parser.parse_args()
+
+days = str(args.days)
 
 urls = {}
-urls['battersea'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711964%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
-urls['hackney'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711961%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
-urls['finsbury'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711952%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
-urls['highgate'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4718090%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
-urls['finchley'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724051%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
-urls['richmond'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724063%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
-urls['peckham'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724075%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
-urls['walthamstow'] 	= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724087%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+
+urls['battersea'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711964%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
+urls['hackney'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711961%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
+urls['finsbury'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711952%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
+urls['highgate'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4718090%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
+urls['finchley'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724051%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
+urls['richmond'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724063%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
+urls['peckham'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724075%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
+urls['walthamstow'] 	= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724087%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + days + "\""
 
 
 for key, value in urls.items():
