@@ -99,9 +99,15 @@ def scrapeResultsToHTMLforURL(searchName, baseURL):
 maxDaysSinceAdded = 1
 
 urls = {}
-urls['battersea'] = "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711964%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
-urls['hackney'] = "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711961%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
-urls['finsbury'] = "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711952%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+urls['battersea'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711964%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+urls['hackney'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711961%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+urls['finsbury'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4711952%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+urls['highgate'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4718090%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+urls['finchley'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724051%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+urls['richmond'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724063%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+urls['peckham'] 		= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724075%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+urls['walthamstow'] 	= "\"http://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A4724087%7D&minBedrooms=2&maxPrice=500000&sortType=6&maxDaysSinceAdded=" + str(maxDaysSinceAdded) + "\""
+
 
 for key, value in urls.items():
 	scrapeResultsToHTMLforURL(key, value)
