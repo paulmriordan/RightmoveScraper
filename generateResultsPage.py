@@ -114,7 +114,7 @@ with open("searchAreas.txt") as searchAreasFile:
 
 urls = {}
 for name, areaID in areas.items():
-	urls[name] = ("\"http://www.rightmove.co.uk/property-for-sale/find.html?" + "locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A" + areaID + "%7D" + "&minBedrooms=" + args.bedrooms + "&maxPrice=" + args.bedrooms + "&sortType=6" + "&maxDaysSinceAdded=" + days + "\"")
+	urls[name] = ("\"http://www.rightmove.co.uk/property-for-sale/find.html?" + "locationIdentifier=USERDEFINEDAREA%5E%7B%22id%22%3A" + areaID + "%7D" + "&minBedrooms=" + args.bedrooms + "&maxPrice=" + args.price + "&sortType=6" + "&maxDaysSinceAdded=" + days + "\"")
 
 for key, value in urls.items():
 	scrapeResultsToHTMLforURL(key, value)
