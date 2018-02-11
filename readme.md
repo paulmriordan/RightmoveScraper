@@ -30,6 +30,22 @@ Only the areas specified in **searchAreas.txt** will be searched. Update this wi
 
 ![Search area ID](https://github.com/paulmriordan/RightmoveScraper/raw/master/searchAreaID.PNG "Search area ID")
 
+Results are exported as HTML pages in the *results* subfolder
+
+## Saved properities KML export
+
+Rightmove doesn't offer an way to view your saved properties on a map. 
+
+With this command, you can export all your saved properties to a KML file, which you can view via Google Maps:
+
+```
+generateSavedPropertiesKML.py -u [USERNAME] -p [PASSWORD]
+```
+
+A KML file is exported into the *results* subfolder
+
+You can view KML files in Google Maps following [this guide](https://support.google.com/mymaps/answer/3024836)
+
 ## Requirements
 
 - Python 3.x
@@ -44,3 +60,4 @@ Only the areas specified in **searchAreas.txt** will be searched. Update this wi
 - Improve filtering (eg, case insensitive search, use regex)
 - Add EPC to results page
 - Add the 'key features' to the results page
+- Exported saved properties KML is hard-coded to a max of 200 properties.
