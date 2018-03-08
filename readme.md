@@ -51,7 +51,7 @@ You can view KML files in Google Maps following [this guide](https://support.goo
 - Python 3.x
 - [Scrapy](https://scrapy.org/) - web scraping framework
 
-## Things to do
+## Future work
 
 - Should check number of results for an area before looping over subsequent pages. Currently loops over 1000 for every area, resulting in many unnecessary requests.
 - Prevent repeatedly finding the same property. 
